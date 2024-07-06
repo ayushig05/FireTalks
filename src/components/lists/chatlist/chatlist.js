@@ -5,6 +5,7 @@ import { FaPlus } from "react-icons/fa";
 import { FaMinus } from "react-icons/fa";
 import { useState } from 'react';
 import { BsPersonSquare } from "react-icons/bs";
+import AddUser from './adduser/addUser';
 
 const Chatlist = () => {
   const [addMode, setAddMode] = useState(false);
@@ -54,6 +55,7 @@ const Chatlist = () => {
           <p>Hello</p>
         </div>
       </div>
+      {addMode && <AddUser />}
     </div>
   )
 }
