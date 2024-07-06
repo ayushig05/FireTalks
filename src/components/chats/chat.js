@@ -1,4 +1,8 @@
 import React from 'react'
+import { 
+  useState, 
+  useRef, 
+  useEffect } from 'react';
 import "./chat.css"
 import { BsPersonSquare } from "react-icons/bs";
 import { FaPhoneAlt } from "react-icons/fa";
@@ -9,11 +13,16 @@ import { FaCamera } from "react-icons/fa";
 import { FaMicrophone } from "react-icons/fa";
 import { MdEmojiEmotions } from "react-icons/md";
 import EmojiPicker from 'emoji-picker-react';
-import { useState } from 'react';
 
 const Chat = () => {
   const [open,setOpen] = useState(false)
   const [text,setText] = useState("")
+
+  const endRef = useRef(null);
+
+  useEffect(() => {
+    endRef.current?.scrollIntoView({ behaviour: "smooth" })
+  }, []);
 
   const handleEmoji = (e) => {
     setText((prev) => prev + e.emoji);
@@ -98,11 +107,38 @@ const Chat = () => {
         </div>
         <div className='message own'>
           <div className='text'>
+            <p>hello my name is joe doe</p>
+            <span>1 min ago</span>
+          </div>
+        </div>
+        <div className='message'>
+          <BsPersonSquare className='img'/>
+          <div className='text'>
+            <p>hello my name is joe doe</p>
+            <span>1 min ago</span>
+          </div>
+        </div>
+        <div className='message own'>
+          <div className='text'>
+            <p>hello my name is joe doe</p>
+            <span>1 min ago</span>
+          </div>
+        </div>
+        <div className='message'>
+          <BsPersonSquare className='img'/>
+          <div className='text'>
+            <p>hello my name is joe doe</p>
+            <span>1 min ago</span>
+          </div>
+        </div>
+        <div className='message own'>
+          <div className='text'>
             <BsPersonSquare className='img'/>
             <p>hello my name is joe doe</p>
             <span>1 min ago</span>
           </div>
         </div>
+        <div ref={endRef}></div>
       </div>
       <div className='bottom'>
         <div className='icons'>

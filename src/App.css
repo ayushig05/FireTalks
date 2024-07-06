@@ -1,4 +1,5 @@
 body {
+  margin: 0;
   background-image: url("./bg.avif");
   display: flex;
   align-items: center;
@@ -7,7 +8,7 @@ body {
   color: white;
 }
 .container {
-  width: 90vw;
+  width: 80vw;
   height: 90vh;
   background-color: rgba(0, 3, 9, 0.674);
   backdrop-filter: blur(19px) saturate(180%);
