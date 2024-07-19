@@ -16,3 +16,9 @@ body {
   border: 2px solid rgba(255, 255, 0, 0.125);
   display: flex;
 }
+.loading {
+  padding: 30px;
+  font-size: 30px;
+  border-radius: 10px;
+  background-color: rgba(17, 25, 40, 0.9);
+}

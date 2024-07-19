@@ -4,6 +4,7 @@ import { BsPersonSquare } from "react-icons/bs";
 import { IoIosArrowUp } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
 import { FaDownload } from "react-icons/fa";
+import { auth } from '../../lib/firebase';
 
 const Detail = () => {
   return (
@@ -69,7 +70,7 @@ const Detail = () => {
           </div>
         </div>
         <button>Block User</button>
-        <button className='btn'>Logout</button>
+        <button className='btn' onClick={() => auth.signOut()}>Logout</button>
       </div>
     </div>
   )

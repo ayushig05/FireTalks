@@ -4,13 +4,17 @@ import { FaVideo } from "react-icons/fa";
 import { MdMoreHoriz } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { BsPersonSquare } from "react-icons/bs";
+import { useUserStore } from '../../../lib/userStore';
 
 const Userinfo = () => {
+
+  const { currentUser } = useUserStore();
+
   return (
     <div className='userinfo'>
         <div className='user'>
-            <BsPersonSquare className='img'/>
-            <h2>Joe</h2>
+            <img src={currentUser.avatar || <BsPersonSquare /> } />
+            <h2>{currentUser.username}</h2>
         </div>
         <div className='icons'>
             <MdMoreHoriz className='img'/>
