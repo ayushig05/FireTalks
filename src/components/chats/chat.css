@@ -18,7 +18,7 @@
             align-items: center;
             gap: 20px;
 
-            .img {
+            img {
                 width: 60px;
                 height: 60px;
                 border-radius: 50%;
@@ -143,6 +143,11 @@
             padding: 10px;
             border-radius: 10px;
             font-size: 16px;
+
+            &:disabled {
+                background-color: #94a7d8ca;
+                cursor: not-allowed;
+            }
         }
 
         .emoji {
@@ -165,6 +170,11 @@
 
             &:hover {
                 background-color: #1a50d8;
+            }
+
+            &:disabled {
+                background-color: #5182feaa;
+                cursor: not-allowed;
             }
         }
     }

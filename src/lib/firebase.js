@@ -9,11 +9,11 @@ const firebaseConfig = {
   projectId: "chat-app-b315e",
   storageBucket: "chat-app-b315e.appspot.com",
   messagingSenderId: "369522247818",
-  appId: "1:369522247818:web:768fa831fc972ea5584573"
+  appId: "1:369522247818:web:768fa831fc972ea5584573",
 };
 
 const app = initializeApp(firebaseConfig);
 
-export const auth = getAuth()
-export const db = getFirestore()
-export const storage = getStorage()
+export const auth = getAuth();
+export const db = getFirestore();
+export const storage = getStorage();
