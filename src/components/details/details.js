@@ -39,7 +39,7 @@ const Detail = () => {
       <div className="user">
         <img src={user?.avatar || <BsPersonSquare />} alt="" />
         <h2>{user?.username}</h2>
-        <p>hello my name is joe doe</p>
+        <p>Hello! my name is {user?.username}</p>
       </div>
       <div className="info">
         <div className="option">

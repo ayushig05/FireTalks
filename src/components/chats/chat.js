@@ -66,7 +66,62 @@ const Chat = () => {
     }
   };
 
-  const handleSend = async () => {  //error
+  // const handleSend = async () => {     //error
+  //   if (text === "") return;
+
+  //   let imgUrl = null;
+
+  //   try {
+  //     if (img.file) {
+  //       imgUrl = await Upload(img.file);
+  //     }
+
+  //     await updateDoc(doc(db, "chats", chatId), {
+  //       messages: arrayUnion({
+  //         senderId: currentUser.id,
+  //         text,
+  //         createdAt: new Date(),
+  //         ...(imgUrl && { img: imgUrl }),
+  //       }),
+  //     });
+
+  //     const userIDs = [currentUser.id, user.id];
+
+  //     userIDs.forEach(async (id) => {
+  //       const userChatsRef = doc(db, "userchats", id);
+  //       const userChatsSnapshot = await getDoc(userChatsRef);
+
+  //       if (userChatsSnapshot.exists()) {
+  //         const userChatsData = userChatsSnapshot.data();
+
+  //         const chatIndex = userChatsData.chats.findIndex(
+  //           (c) => c.chatId === chatId
+  //         );
+
+  //         userChatsData.chats[chatIndex].lastMessage = text;
+  //         userChatsData.chats[chatIndex].isSeen =
+  //           id === currentUser.id ? true : false;
+  //         userChatsData.chats[chatIndex].updatedAt = Date.now();
+
+  //         await updateDoc(userChatsRef, {
+  //           chats: userChatsData.chats,
+  //         });
+  //       }
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+
+  //   setImg({
+  //     file: null,
+  //     url: "",
+  //   });
+
+  //   setText("");
+  // };
+
+
+  const handleSend = async () => {
     if (text === "") return;
 
     let imgUrl = null;
@@ -110,15 +165,16 @@ const Chat = () => {
       });
     } catch (err) {
       console.log(err);
-    }
-
+    } finally{
     setImg({
       file: null,
       url: "",
     });
 
     setText("");
+    }
   };
+
 
   return (
     <div className="chat">
@@ -127,7 +183,7 @@ const Chat = () => {
           <img src={user?.avatar || <BsPersonSquare />} alt="" />
           <div className="text">
             <span>{user?.username}</span>
-            <p>hello my name is joe doe.</p>
+            <p>Hello! my name is {user?.username}</p>
           </div>
         </div>
         <div className="icons">
