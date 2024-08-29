@@ -66,61 +66,6 @@ const Chat = () => {
     }
   };
 
-  // const handleSend = async () => {     //error
-  //   if (text === "") return;
-
-  //   let imgUrl = null;
-
-  //   try {
-  //     if (img.file) {
-  //       imgUrl = await Upload(img.file);
-  //     }
-
-  //     await updateDoc(doc(db, "chats", chatId), {
-  //       messages: arrayUnion({
-  //         senderId: currentUser.id,
-  //         text,
-  //         createdAt: new Date(),
-  //         ...(imgUrl && { img: imgUrl }),
-  //       }),
-  //     });
-
-  //     const userIDs = [currentUser.id, user.id];
-
-  //     userIDs.forEach(async (id) => {
-  //       const userChatsRef = doc(db, "userchats", id);
-  //       const userChatsSnapshot = await getDoc(userChatsRef);
-
-  //       if (userChatsSnapshot.exists()) {
-  //         const userChatsData = userChatsSnapshot.data();
-
-  //         const chatIndex = userChatsData.chats.findIndex(
-  //           (c) => c.chatId === chatId
-  //         );
-
-  //         userChatsData.chats[chatIndex].lastMessage = text;
-  //         userChatsData.chats[chatIndex].isSeen =
-  //           id === currentUser.id ? true : false;
-  //         userChatsData.chats[chatIndex].updatedAt = Date.now();
-
-  //         await updateDoc(userChatsRef, {
-  //           chats: userChatsData.chats,
-  //         });
-  //       }
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-
-  //   setImg({
-  //     file: null,
-  //     url: "",
-  //   });
-
-  //   setText("");
-  // };
-
-
   const handleSend = async () => {
     if (text === "") return;
 
@@ -175,7 +120,6 @@ const Chat = () => {
     }
   };
 
-
   return (
     <div className="chat">
       <div className="top">
@@ -194,18 +138,25 @@ const Chat = () => {
       </div>
       <div className="center">
         {chat?.messages?.map((message) => {
-          <div
-            className={
-              message.senderId === currentUser?.id ? "message own" : "message"
-            }
-            key={message?.createdAt}
-          >
-            <div className="text">
-              {message.img && <img src={message.img} alt="" />}
-              <p>{message.text}</p>
-              {/* <span>1 min ago</span> */}
+          const createdAt = message.createdAt
+            ? new Date(message.createdAt.seconds * 1000)
+            : null;
+          return (
+            <div
+              className={
+                message.senderId === currentUser?.id ? "message own" : "message"
+              }
+              key={message?.createdAt?.seconds || Math.random()}
+            >
+              <div className="text">
+                {message.img && <img src={message.img} alt="Message Image" />}
+                <p>{message.text}</p>
+                <span>
+                  {createdAt ? createdAt.toLocaleTimeString() : "Unknown Time"}
+                </span>
+              </div>
             </div>
-          </div>;
+          );
         })}
         {img.url && (
           <div className="message own">
