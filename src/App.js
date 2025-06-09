@@ -1,7 +1,6 @@
 import "./App.css";
 import List from "./components/lists/lists";
 import Chat from "./components/chats/chat";
-import Detail from "./components/details/details";
 import Login from "./components/login/login";
 import Notification from "./components/notifications/notification";
 import { useEffect } from "react";
@@ -32,7 +31,6 @@ function App() {
         <>
           <List />
           {chatId && <Chat />}
-          {chatId && <Detail />}
         </>
       ) : (
         <Login />

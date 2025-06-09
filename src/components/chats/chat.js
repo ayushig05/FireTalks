@@ -21,6 +21,7 @@ import { db } from "../../lib/firebase";
 import { useChatStore } from "../../lib/chatStore";
 import { useUserStore } from "../../lib/userStore";
 import Upload from "../../lib/upload";
+import Detail from "../details/details";
 
 const Chat = () => {
   const [open, setOpen] = useState(false);
@@ -30,6 +31,7 @@ const Chat = () => {
     file: null,
     url: "",
   });
+  const [showDetails, setShowDetails] = useState(false);
 
   const { currentUser } = useUserStore();
   const { chatId, user, isCurrentUserBlocked, isReceiverBlocked } =
@@ -110,107 +112,127 @@ const Chat = () => {
       });
     } catch (err) {
       console.log(err);
-    } finally{
-    setImg({
-      file: null,
-      url: "",
-    });
+    } finally {
+      setImg({
+        file: null,
+        url: "",
+      });
 
-    setText("");
+      setText("");
     }
+  };
+
+  const toggleDetails = () => {
+    setShowDetails((prev) => !prev);
+  };
+
+  const handleBack = () => {
+    setShowDetails(false);
   };
 
   return (
     <div className="chat">
-      <div className="top">
-        <div className="user">
-          <img src={user?.avatar || <BsPersonSquare />} alt="" />
-          <div className="text">
-            <span>{user?.username}</span>
-            <p>Hello! my name is {user?.username}</p>
-          </div>
-        </div>
-        <div className="icons">
-          <FaPhoneAlt className="img" />
-          <FaVideo className="img" />
-          <FaInfoCircle className="img" />
-        </div>
-      </div>
-      <div className="center">
-        {chat?.messages?.map((message) => {
-          const createdAt = message.createdAt
-            ? new Date(message.createdAt.seconds * 1000)
-            : null;
-          return (
-            <div
-              className={
-                message.senderId === currentUser?.id ? "message own" : "message"
-              }
-              key={message?.createdAt?.seconds || Math.random()}
-            >
+      {showDetails ? (
+        <Detail onBack={handleBack} />
+      ) : (
+        <>
+          <div className="top">
+            <div className="user" onClick={toggleDetails}>
+              <img src={user?.avatar || <BsPersonSquare />} alt="" />
               <div className="text">
-                {message.img && <img src={message.img} alt="Message Image" />}
-                <p>{message.text}</p>
-                <span>
-                  {createdAt ? createdAt.toLocaleTimeString() : "Unknown Time"}
-                </span>
+                <span>{user?.username}</span>
+                <p>Hello! my name is {user?.username}</p>
               </div>
             </div>
-          );
-        })}
-        {img.url && (
-          <div className="message own">
-            <div className="texts">
-              <img src={img.url} alt="" />
+            <div className="icons">
+              <FaPhoneAlt className="img" />
+              <FaVideo className="img" />
+              <FaInfoCircle className="img" onClick={toggleDetails}/>
             </div>
           </div>
-        )}
-        <div ref={endRef}></div>
-      </div>
-      <div className="bottom">
-        <div className="icons">
-          <label htmlFor="file">
-            <FaImage className="img" />
-          </label>
-          <input
-            type="file"
-            id="file"
-            style={{ display: "none" }}
-            onChange={handleImg}
-          />
-          <FaCamera className="img" />
-          <FaMicrophone className="img" />
-        </div>
-        <input
-          type="text"
-          placeholder={
-            isCurrentUserBlocked || isReceiverBlocked
-              ? "You cannot send a message"
-              : "Type a messgae..."
-          }
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          disabled={isCurrentUserBlocked || isReceiverBlocked}
-        />
-        <div className="emoji">
-          <MdEmojiEmotions
-            className="img"
-            onClick={() => setOpen((prev) => !prev)}
-          />
-          <EmojiPicker
-            open={open}
-            onEmojiClick={handleEmoji}
-            className="picker"
-          />
-        </div>
-        <button
-          className="btn"
-          onClick={handleSend}
-          disabled={isCurrentUserBlocked || isReceiverBlocked}
-        >
-          Send
-        </button>
-      </div>
+          <div className="center">
+            {chat?.messages?.map((message) => {
+              const createdAt = message.createdAt
+                ? new Date(message.createdAt.seconds * 1000)
+                : null;
+              return (
+                <div
+                  className={
+                    message.senderId === currentUser?.id
+                      ? "message own"
+                      : "message"
+                  }
+                  key={message?.createdAt?.seconds || Math.random()}
+                >
+                  <div className="text">
+                    {message.img && (
+                      <img src={message.img} alt="Message Image" />
+                    )}
+                    <p>{message.text}</p>
+                    <span>
+                      {createdAt
+                        ? createdAt.toLocaleTimeString()
+                        : "Unknown Time"}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+            {img.url && (
+              <div className="message own">
+                <div className="texts">
+                  <img src={img.url} alt="Preview" />
+                </div>
+              </div>
+            )}
+            <div ref={endRef}></div>
+          </div>
+          <div className="bottom">
+            <div className="icons">
+              <label htmlFor="file">
+                <FaImage className="img" />
+              </label>
+              <input
+                type="file"
+                id="file"
+                style={{ display: "none" }}
+                onChange={handleImg}
+              />
+              <FaCamera className="img" />
+              <FaMicrophone className="img" />
+            </div>
+            <input
+              type="text"
+              placeholder={
+                isCurrentUserBlocked || isReceiverBlocked
+                  ? "You cannot send a message"
+                  : "Type a message..."
+              }
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              disabled={isCurrentUserBlocked || isReceiverBlocked}
+            />
+            <div className="emoji">
+              <MdEmojiEmotions
+                className="img"
+                onClick={() => setOpen((prev) => !prev)}
+              />
+              <EmojiPicker
+                open={open}
+                onEmojiClick={handleEmoji}
+                className="picker"
+              />
+            </div>
+            <button
+              className="btn"
+              onClick={handleSend}
+              disabled={isCurrentUserBlocked || isReceiverBlocked}
+            >
+              Send
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 };

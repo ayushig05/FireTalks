@@ -1,20 +1,15 @@
 import React from "react";
 import "./details.css";
 import { BsPersonSquare } from "react-icons/bs";
-import { IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowUp, IoMdArrowBack } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
 import { FaDownload } from "react-icons/fa";
 import { auth, db } from "../../lib/firebase";
 import { useChatStore } from "../../lib/chatStore";
 import { useUserStore } from "../../lib/userStore";
-import { 
-  arrayRemove, 
-  arrayUnion, 
-  doc, 
-  updateDoc 
-} from "firebase/firestore";
+import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 
-const Detail = () => {
+const Detail = ({ onBack }) => {
   const { user, isCurrentUserBlocked, isReceiverBlocked, changeBlock } =
     useChatStore();
   const { currentUser } = useUserStore();
@@ -36,6 +31,7 @@ const Detail = () => {
 
   return (
     <div className="detail">
+      <IoMdArrowBack className="back-arrow" onClick={onBack} />
       <div className="user">
         <img src={user?.avatar || <BsPersonSquare />} alt="" />
         <h2>{user?.username}</h2>
@@ -96,16 +92,18 @@ const Detail = () => {
             <IoIosArrowUp className="img" />
           </div>
         </div>
-        <button onClick={handleBlock}>
-          {isCurrentUserBlocked
-            ? "You are blocked!"
-            : isReceiverBlocked
-            ? "User Blocked"
-            : "Block User"}
-        </button>
-        <button className="btn" onClick={() => auth.signOut()}>
-          Logout
-        </button>
+        <div className="button-container">
+          <button onClick={handleBlock}>
+            {isCurrentUserBlocked
+              ? "You are blocked!"
+              : isReceiverBlocked
+              ? "User Blocked"
+              : "Block User"}
+          </button>
+          <button className="btn" onClick={() => auth.signOut()}>
+            Logout
+          </button>
+        </div>
       </div>
     </div>
   );
